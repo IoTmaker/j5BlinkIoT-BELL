@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+
+  h1 {{"Led controller"}}
+  div(ng-controller="ArduinoController as vm")
+    button(ng-click="vm.ledOn()") On
+    button(ng-click="vm.ledOff()") Off
+
