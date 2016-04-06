@@ -57,6 +57,14 @@ app.use(function(err, req, res, next) {
   });
 });
 
+//Arduino board connection
+
+var board = new five.Board();
+board.on("ready", function() {
+    console.log('Arduino connected');
+    led = new five.Led(2);
+});
+console.log('Waiting for Arduino connection');
 
 
 // Setup SOCKET.IO Server
@@ -65,16 +73,20 @@ var server = http.createServer(app);
 var io = require('socket.io').listen(server);  //pass a http.Server instance
 server.listen(9010);  //listen on port 9010
 
-io.on('connection', function(socket) {
-  console.log('sending news');
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    console.log('received my other event with data:', data);
-  });
-  setInterval(() => {
-    console.log('sending the weather...');
-    socket.emit('weather', { message: 'it is sunny and warm' });
-  }, 5000);
+//Socket connection handler
+io.on('connection', function (socket) {
+    console.log(socket.id);
+
+    socket.on('led:on', function (data) {
+       led.on();
+       console.log('LED ON RECEIVED');
+    });
+
+    socket.on('led:off', function (data) {
+        led.off();
+        console.log('LED OFF RECEIVED');
+
+    });
 });
 
 
