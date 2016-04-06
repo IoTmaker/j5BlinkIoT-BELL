@@ -16,17 +16,24 @@ controller('ArduinoController', function (mySocket) {
       socket.emit('led:off');
       console.log('LED OFF');
     };
+
+    socket.on('sensorData', function(data){
+    console.log('data recieved. tempC: ', data.temp + " %RH: " + data.humidity);
+    vm.temperature = data.temperature;
+    vm.humidity = data.humidity;
+  });
+
 });
 
-angular.module('IoT')
-.controller('sensorCtrl', sensorCtrl);
+// angular.module('IoT')
+// .controller('sensorCtrl', sensorCtrl);
 
-// ensures that functions are properly compiled
-sensorCtrl.$inject = ['$http'];
+// // ensures that functions are properly compiled
+// sensorCtrl.$inject = ['$http'];
 
-function sensorCtrl($http){
+// function sensorCtrl($http){
 
-}
+// }
 
 
 

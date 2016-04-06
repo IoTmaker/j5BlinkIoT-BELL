@@ -1,11 +1,25 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  h1  #{title}
+  hr
 
-  h1 {{"Led controller"}}
+  h2 {{"Led controller"}}
   div(ng-controller="ArduinoController as vm")
     button(ng-click="vm.ledOn()") On
     button(ng-click="vm.ledOff()") Off
+
+  hr
+
+  h3 Temperature
+  h4 degrees Celcius
+  div(ng-controller="ArduinoController as vm")
+    h1 {{ data.temperature }} C
+
+  hr
+
+  h3 Humidity
+  h4 percent Relative Humidity
+  div(ng-controller="ArduinoController as vm")
+    h1 {{ data.humidity }} %RH
 
